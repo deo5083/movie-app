@@ -3,6 +3,10 @@ import SearchBar from './SearchBar';
 import SearchButton from './SearchButton';
 import SearchResult from './SearchResult';
 import { searchSuggest } from '../../../utlis/apis'
+import { selectSearchResult } from '../../../actions/actions'
+import { connect } from 'react-redux';
+import {bindActionCreators} from 'redux';
+
 
 class Search extends React.Component {
   constructor(props) {
@@ -16,22 +20,18 @@ class Search extends React.Component {
   }
 
   searchClickHandler = () => {
-    const { searchTerm, isSearched } = this.state;
+    const { searchTerm } = this.state;
     if (searchTerm && searchTerm!=="") {
 
       var _this = this;
       searchSuggest(searchTerm.replace(/\s+/g, '_')).then(function (result) {
 
         let filteredResult = [];
-        let count = 0;
-        
         result && result.d && result.d.forEach(i => {
           if (!i.id.includes("/")) {
-            filteredResult.push({ label: i.l, id: i.id, movies: i.s })
-            count++;
+            filteredResult.push({ label: i.l, id: i.id, details: i.s, img: (i.i !==undefined && i.i.length > 0) ? i.i[0] : undefined })
           }
-
-        })
+        });
         _this.setState({
           isSearched: true,
           searchResult: filteredResult
@@ -73,13 +73,27 @@ class Search extends React.Component {
 
         <SearchResult
           searchResult={this.state.searchResult}
+          handleSearchClick={this.props.selectSearchResult}
         />
       </div>
     );
   }
 }
 
-export default Search;
+
+
+function mapStateToProps(state){
+  return {
+      selectedSearchResult: state.selectedSearchResult
+  }
+}
+function matchDispatchToProps(dispatch){
+  return bindActionCreators({
+    selectSearchResult: selectSearchResult
+  }, dispatch);
+}
+
+export default connect(mapStateToProps, matchDispatchToProps)(Search);
 
 
 

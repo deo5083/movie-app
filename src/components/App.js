@@ -4,8 +4,9 @@ import { connect } from 'react-redux';
 // import logo from './logo.svg';
 // import './App.css';
 
-import { simpleAction } from '../actions/simpleAction'
+import { simpleAction } from '../actions/actions'
 import Header from '../components/header/Header'
+import Body from './body/Body'
 
 /* 
  * mapDispatchToProps
@@ -38,7 +39,7 @@ class App extends Component {
     return (
       <div className="container-fluid">
         <Header />
-        {/* <input type="button" onClick={this.simpleAction}/> */}
+        <Body/>
       </div>
     );
   }
