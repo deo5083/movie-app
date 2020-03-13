@@ -1,12 +1,8 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Search from './search/Search'
 
 
 class Header extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
 
   render() {
     return (
@@ -18,6 +14,3 @@ class Header extends React.Component {
 }
 
 export default Header;
-
-
-

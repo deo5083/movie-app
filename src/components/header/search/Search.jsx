@@ -1,43 +1,39 @@
-import React, { Component, Fragment } from 'react';
+import React from 'react';
 import SearchBar from './SearchBar';
-import SearchButton from './SearchButton';
 import SearchResult from './SearchResult';
-import { searchSuggest } from '../../../utlis/apis'
+import { searchSuggest, searchOMDB } from '../../../utlis/apis'
 import { selectSearchResult } from '../../../actions/actions'
 import { connect } from 'react-redux';
-import {bindActionCreators} from 'redux';
+import { bindActionCreators } from 'redux';
 
 
 class Search extends React.Component {
   constructor(props) {
     super(props);
-
+    this.THIS = this;
     this.state = {
       searchTerm: null,
       isSearched: false,
-      searchResult: null
+      searchResult: null,
+      searchBarHasFocus: false,
+      selectedResult: null
     }
   }
 
   searchClickHandler = () => {
     const { searchTerm } = this.state;
-    if (searchTerm && searchTerm!=="") {
+    if (searchTerm && searchTerm !== "") {
+      const query = searchTerm.toLowerCase().replace(/\s+/g, '_');
 
-      var _this = this;
-      searchSuggest(searchTerm.replace(/\s+/g, '_')).then(function (result) {
 
-        let filteredResult = [];
-        result && result.d && result.d.forEach(i => {
-          if (!i.id.includes("/")) {
-            filteredResult.push({ label: i.l, id: i.id, details: i.s, img: (i.i !==undefined && i.i.length > 0) ? i.i[0] : undefined })
-          }
+      searchSuggest(query).then(res => {
+        this.THIS.setState({
+              isSearched: res.isSearched,
+              searchResult: res.searchResult
         });
-        _this.setState({
-          isSearched: true,
-          searchResult: filteredResult
-        })
       });
-    }else{
+
+    } else {
       this.setState({
         isSearched: true,
         searchResult: null
@@ -45,35 +41,56 @@ class Search extends React.Component {
     }
   }
 
+  handleUserSelectedSearchResult = (selectedId) => {
+    console.log("searchOMDB(selectedId)",searchOMDB(selectedId).then(res => {return res}) )
+
+    // searchOMDB(selectedId).then(res => {
+    //   console.log("res",res)
+
+    //   this.THIS.setState({
+    //       selectedResult: res
+    //   });
+    // });
+    
+  }
+
+  handleSearchBarOnFocus = (val) => {
+    this.setState({
+      searchBarHasFocus: val
+    })
+  }
+
   searchInputChanged = (event) => {
     this.setState({ searchTerm: event })
   }
 
   render() {
-
     return (
-      <div style={{ width: "40em" }}>
+      <div style={{ width: "40em", position: "relative" }}>
         <div className="input-group" style={{ width: "100%" }}>
 
           <SearchBar
             placeholder="Search movies, shows, etc"
             handleSearchInputChanged={this.searchInputChanged}
             handleButtonClick={this.searchClickHandler}
+            handleSearchBarOnFocus={this.handleSearchBarOnFocus}
+            searchTerm={this.state.searchTerm}
 
           />
-
-          <div className="input-group-append">
-            <SearchButton
-              buttonTitle="Search"
-              handleButtonClick={this.searchClickHandler}
-            />
-          </div>
 
         </div>
 
         <SearchResult
           searchResult={this.state.searchResult}
+
+          selectedSearchResult={this.props.selectedSearchResult}
+          searchTerm={this.state.searchTerm}
+          searchBarHasFocus={this.state.searchBarHasFocus}
+
           handleSearchClick={this.props.selectSearchResult}
+          handleSearchBarOnFocus={this.handleSearchBarOnFocus}
+          searchInputChanged={this.searchInputChanged}
+          handleUserSelectedSearchResult = {this.handleUserSelectedSearchResult}
         />
       </div>
     );
@@ -82,12 +99,12 @@ class Search extends React.Component {
 
 
 
-function mapStateToProps(state){
+function mapStateToProps(state) {
   return {
-      selectedSearchResult: state.selectedSearchResult
+    selectedSearchResult: state.simpleReducer.result
   }
 }
-function matchDispatchToProps(dispatch){
+function matchDispatchToProps(dispatch) {
   return bindActionCreators({
     selectSearchResult: selectSearchResult
   }, dispatch);

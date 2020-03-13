@@ -9,6 +9,7 @@ import { createStore, applyMiddleware } from "redux";
 import simpleReducer from './reducers/index'
 import thunk from 'redux-thunk';
 
+
 ReactDOM.render(
   <Provider store={createStore(simpleReducer, applyMiddleware(thunk))}>
     <App />

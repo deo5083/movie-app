@@ -5,12 +5,12 @@ export const simpleAction = () => dispatch => {
   })
 }
 
-export const search = (result) => dispatch => {
-  dispatch({
-    type: 'SEARCH_RESULT',
-    payload: result
-  })
-}
+// export const search = (result) => dispatch => {
+//   dispatch({
+//     type: 'SEARCH_RESULT',
+//     payload: result
+//   })
+// }
 
 export const selectSearchResult = (selected) => dispatch => {
   dispatch({

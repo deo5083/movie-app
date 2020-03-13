@@ -39,6 +39,7 @@ class App extends Component {
     return (
       <div className="container-fluid">
         <Header />
+        <br/>
         <Body/>
       </div>
     );
