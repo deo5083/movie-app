@@ -1,49 +1,32 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-
-// import logo from './logo.svg';
-// import './App.css';
-
-import { simpleAction } from '../actions/actions'
+import { bindActionCreators } from 'redux';
 import Header from '../components/header/Header'
-import Body from './body/Body'
+import Body from './body/index'
 
-/* 
- * mapDispatchToProps
-*/
-const mapDispatchToProps = dispatch => ({
-  simpleAction: () => dispatch(simpleAction())
-})
-
-/* 
- * mapStateToProps
-*/
-const mapStateToProps = state => ({
-  ...state
-})
-
-/**
- * @class App
- * @extends {Component}
- */
 class App extends Component {
-  /**
-   * @memberof App
-   * @summary handles button click 
-   */
+
   simpleAction = (event) => {
     this.props.simpleAction();
   }
 
   render() {
     return (
-      <div className="container-fluid">
+      <div>
         <Header />
-        <br/>
-        <Body/>
+        <br />
+        <Body />
       </div>
     );
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+function mapStateToProps(state) {
+  return {
+    selectedSearchResult: state.reducer.result
+  }
+}
+function matchDispatchToProps(dispatch) {
+  return bindActionCreators({}, dispatch);
+}
+export default connect(mapStateToProps, matchDispatchToProps)(App);

@@ -6,8 +6,20 @@ class Header extends React.Component {
 
   render() {
     return (
+      <div className="container">
+        <div className="row">
+          <div className="col">
 
-      <Search />
+          </div>
+          <div className="col-6">
+            <Search />
+          </div>
+          <div className="col">
+
+          </div>
+        </div>
+
+      </div>
 
     );
   }

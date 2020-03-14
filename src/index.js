@@ -6,12 +6,12 @@ import App from './components/App';
 import registerServiceWorker from './registerServiceWorker';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { createStore, applyMiddleware } from "redux";
-import simpleReducer from './reducers/index'
+import reducer from './reducers/index'
 import thunk from 'redux-thunk';
 
 
 ReactDOM.render(
-  <Provider store={createStore(simpleReducer, applyMiddleware(thunk))}>
+  <Provider store={createStore(reducer, applyMiddleware(thunk))}>
     <App />
   </Provider>,
   document.getElementById('root')

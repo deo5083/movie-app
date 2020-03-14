@@ -2,7 +2,7 @@ import React from 'react';
 import SearchBar from './SearchBar';
 import SearchResult from './SearchResult';
 import { searchSuggest, searchOMDB } from '../../../utlis/apis'
-import { selectSearchResult } from '../../../actions/actions'
+import { selectSearchResult, getSelectionDetails } from '../../../actions/actions'
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
@@ -10,7 +10,7 @@ import { bindActionCreators } from 'redux';
 class Search extends React.Component {
   constructor(props) {
     super(props);
-    this.THIS = this;
+
     this.state = {
       searchTerm: null,
       isSearched: false,
@@ -25,11 +25,11 @@ class Search extends React.Component {
     if (searchTerm && searchTerm !== "") {
       const query = searchTerm.toLowerCase().replace(/\s+/g, '_');
 
-
+      const _this = this;
       searchSuggest(query).then(res => {
-        this.THIS.setState({
-              isSearched: res.isSearched,
-              searchResult: res.searchResult
+        _this.setState({
+          isSearched: res.isSearched,
+          searchResult: res.searchResult
         });
       });
 
@@ -42,16 +42,9 @@ class Search extends React.Component {
   }
 
   handleUserSelectedSearchResult = (selectedId) => {
-    console.log("searchOMDB(selectedId)",searchOMDB(selectedId).then(res => {return res}) )
-
-    // searchOMDB(selectedId).then(res => {
-    //   console.log("res",res)
-
-    //   this.THIS.setState({
-    //       selectedResult: res
-    //   });
-    // });
-    
+    searchOMDB(selectedId).then(res => {
+      this.props.getSelectionDetails(res)
+    })
   }
 
   handleSearchBarOnFocus = (val) => {
@@ -66,51 +59,41 @@ class Search extends React.Component {
 
   render() {
     return (
-      <div style={{ width: "40em", position: "relative" }}>
+      <div style={{ position: "relative" }}>
         <div className="input-group" style={{ width: "100%" }}>
-
           <SearchBar
             placeholder="Search movies, shows, etc"
             handleSearchInputChanged={this.searchInputChanged}
             handleButtonClick={this.searchClickHandler}
             handleSearchBarOnFocus={this.handleSearchBarOnFocus}
             searchTerm={this.state.searchTerm}
-
           />
-
         </div>
 
         <SearchResult
           searchResult={this.state.searchResult}
-
           selectedSearchResult={this.props.selectedSearchResult}
           searchTerm={this.state.searchTerm}
           searchBarHasFocus={this.state.searchBarHasFocus}
-
           handleSearchClick={this.props.selectSearchResult}
           handleSearchBarOnFocus={this.handleSearchBarOnFocus}
           searchInputChanged={this.searchInputChanged}
-          handleUserSelectedSearchResult = {this.handleUserSelectedSearchResult}
+          handleUserSelectedSearchResult={this.handleUserSelectedSearchResult}
         />
       </div>
     );
   }
 }
 
-
-
 function mapStateToProps(state) {
   return {
-    selectedSearchResult: state.simpleReducer.result
+    selectedSearchResult: state.reducer.result
   }
 }
 function matchDispatchToProps(dispatch) {
   return bindActionCreators({
-    selectSearchResult: selectSearchResult
+    selectSearchResult: selectSearchResult,
+    getSelectionDetails: getSelectionDetails
   }, dispatch);
 }
-
 export default connect(mapStateToProps, matchDispatchToProps)(Search);
-
-
-
