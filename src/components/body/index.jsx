@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import Jumbo from './Jumbo'
+import Poster from './Poster'
 import Title from './Title'
 import TextArea from './TextArea'
 
@@ -32,7 +32,7 @@ class Body extends React.Component {
                 </div>
 
                 <div className="col d-flex justify-content-center">
-                  <Jumbo
+                  <Poster
                     selectedSearchResult={selectedSearchResult}
                   />
                 </div>

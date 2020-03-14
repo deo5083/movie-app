@@ -1,7 +1,7 @@
 import React from 'react';
 import loading from '../icons/loading.gif'
 
-class Jumbo extends React.Component {
+class Poster extends React.Component {
 
     render() {
         const { selectedSearchResult } = this.props;
@@ -30,7 +30,7 @@ class Jumbo extends React.Component {
     }
 }
 
-export default Jumbo;
+export default Poster;
 
 
 
