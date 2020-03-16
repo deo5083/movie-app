@@ -6,7 +6,6 @@ const API_KEYS = {
 
 const IMDB_SUGGESTS = "https://v2.sg.media-imdb.com/suggests";
 const OMDB_API = "http://www.omdbapi.com/?apikey=" + API_KEYS.OMDB;
-//+"&i=tt3896198"
 
 
 export async function searchSuggest(searchString) {
@@ -27,7 +26,14 @@ export async function searchSuggest(searchString) {
         let filteredResult = [];
         result && result.d && result.d.forEach(i => {
             if (!i.id.includes("/")) {
-                filteredResult.push({ label: i.l, id: i.id, details: i.s, img: (i.i !== undefined && i.i.length > 0) ? i.i[0] : undefined })
+                filteredResult.push({ 
+                    label: i.l, 
+                        id: i.id, 
+                        details: i.s, 
+                        img: (i.i !== undefined && i.i.length > 0) ? i.i[0] : undefined, 
+                        type: i.hasOwnProperty("q") ? i.q : "person",
+                        year: i.hasOwnProperty("yr") ? i.yr : i.hasOwnProperty("y") ? i.y : undefined
+                    })
             }
         });
         return { isSearched: true, searchResult: filteredResult }

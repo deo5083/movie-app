@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 import Poster from './Poster'
 import Title from './Title'
 import TextArea from './TextArea'
+import { Jumbotron, Container, Col, Row} from 'react-bootstrap';
 
 class Body extends React.Component {
 
@@ -11,38 +12,36 @@ class Body extends React.Component {
     const { selectedSearchResult, selectionDetails } = this.props;
 
     return (
-      <div className="container-fluid" style={{ height: "100%", width: "100%", position: "absolute", zIndex: "0" }}>
+      <Container fluid style={{ height: "100%", width: "100%", position: "absolute", zIndex: "0" }}>
 
         {(selectionDetails !== undefined && selectedSearchResult !== undefined) &&
           <Fragment>
-            <div className="jumbotron">
-
-              <div className="row">
-                <div className="col">
+            <Jumbotron>
+            <br/>
+              <Row className="row">
+                <Col className="col">
                   <Title
                     selectedSearchResult={selectedSearchResult}
                     selectionDetails={selectionDetails}
                   />
-                  <hr />
                   <TextArea
                     selectedSearchResult={selectedSearchResult}
                     selectionDetails={selectionDetails}
                   />
-                  <hr />
-                </div>
-
-                <div className="col d-flex justify-content-center">
+                </Col>
+                
+                <Col className="col d-flex justify-content-center">
                   <Poster
                     selectedSearchResult={selectedSearchResult}
                   />
-                </div>
+                </Col>
 
-              </div>
+              </Row>
 
-            </div>
+            </Jumbotron>
           </Fragment>
         }
-      </div>
+      </Container>
     );
   }
 }
@@ -56,8 +55,4 @@ function mapStateToProps(state) {
 function matchDispatchToProps(dispatch) {
   return bindActionCreators({}, dispatch);
 }
-
 export default connect(mapStateToProps, matchDispatchToProps)(Body);
-
-
-

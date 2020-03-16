@@ -6,8 +6,12 @@ class Title extends React.Component {
         const { selectedSearchResult, selectionDetails } = this.props;
         return (
             <div>
-                <h3>{selectedSearchResult.label} <small>{selectionDetails.Year ? "(" + selectionDetails.Year + ")" : ""}</small></h3>
-
+                <h3>
+                    {selectedSearchResult.label}
+                    <br />
+                    <small>{selectionDetails.Year ? "(" + selectionDetails.Year + ")" : ""}</small>
+                </h3>
+                <hr />
             </div>
         );
     }

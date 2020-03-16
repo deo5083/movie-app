@@ -1,6 +1,6 @@
 import React from 'react';
 import SearchBar from './SearchBar';
-import SearchResult from './SearchResult';
+import SearchResult from './searchResult/SearchResult';
 import { searchSuggest, searchOMDB } from '../../../utlis/apis'
 import { selectSearchResult, getSelectionDetails } from '../../../actions/actions'
 import { connect } from 'react-redux';
@@ -24,7 +24,6 @@ class Search extends React.Component {
     const { searchTerm } = this.state;
     if (searchTerm && searchTerm !== "") {
       const query = searchTerm.toLowerCase().replace(/\s+/g, '_');
-
       const _this = this;
       searchSuggest(query).then(res => {
         _this.setState({
@@ -59,7 +58,7 @@ class Search extends React.Component {
 
   render() {
     return (
-      <div style={{ position: "relative" }}>
+      <div style={{ position: "relative", width: "40em" }}>
         <div className="input-group" style={{ width: "100%" }}>
           <SearchBar
             placeholder="Search movies, shows, etc"

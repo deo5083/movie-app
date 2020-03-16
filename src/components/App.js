@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Header from '../components/header/Header'
@@ -6,17 +6,12 @@ import Body from './body/index'
 
 class App extends Component {
 
-  simpleAction = (event) => {
-    this.props.simpleAction();
-  }
-
   render() {
     return (
-      <div>
+      <Fragment>
         <Header />
-        <br />
         <Body />
-      </div>
+      </Fragment>
     );
   }
 }

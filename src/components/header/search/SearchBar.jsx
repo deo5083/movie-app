@@ -1,4 +1,5 @@
 import React from 'react';
+import { InputGroup } from 'react-bootstrap';
 
 class SearchBar extends React.Component {
     handleOnKeyUp = () => {
@@ -9,7 +10,7 @@ class SearchBar extends React.Component {
     render() {
         return (
 
-            <div style={{ height: "auto", width: "80%" }} className="input-group searchBarDiv">
+            <InputGroup style={{ height: "auto", width: "80%" }} className="searchBarDiv">
                 <input
                     className="form-control border-right-0"
                     type="text"
@@ -25,7 +26,7 @@ class SearchBar extends React.Component {
                 <div className="input-group-append">
                     <span className="input-group-text bg-transparent"><img style={{ width: "20px", height: "20px" }} src="https://img.icons8.com/ios-filled/50/000000/search.png" alt="search"/></span>
                 </div>
-            </div>
+            </InputGroup>
         );
     }
 }
