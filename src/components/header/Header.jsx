@@ -9,7 +9,7 @@ class Header extends React.Component {
 
       <Navbar bg="light" fixed="top" >
         <Navbar.Collapse id="basic-navbar-nav">
-          <Container>
+          <Container fluid>
             <Row>
               <Col>
                 <Navbar.Brand href="#home">MovieLook</Navbar.Brand>
