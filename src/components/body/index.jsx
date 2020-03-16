@@ -10,7 +10,6 @@ class Body extends React.Component {
 
   render() {
     const { selectedSearchResult, selectionDetails } = this.props;
-
     return (
       <Container fluid style={{ height: "100%", width: "100%", position: "absolute", zIndex: "0" }}>
 
